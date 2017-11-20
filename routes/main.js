@@ -1,8 +1,29 @@
 var router = require('express').Router()
 var ObjectId = require('mongoose').Types.ObjectId
 var moment = require('moment')
+var multer = require('multer')
+// var crypto = require('crypto')
+// var path = require('path')
 
 var Post = require('../models/post')
+
+var upload = multer({
+  dest: 'static/uploads/'
+})
+
+// var storage = multer.diskStorage({
+//   destination: 'some-destination',
+//   filename: function (req, file, callback) {
+//     crypto.pseudoRandomBytes(16, function (err, raw) {
+//       if (err) return callback(err)
+//       callback(null, raw.toString('hex') + path.extname(file.originalname))
+//     })
+//   }
+// })
+
+// var upload = multer({
+//   storage: storage
+// }).array('image')
 
 router.get('/', function (req, res) {
   Post.find({}, function (err, posts) {
@@ -12,6 +33,7 @@ router.get('/', function (req, res) {
     var data = posts
     for (let index = 0; index < data.length; index++) {
       data[index].date2 = moment(data[index].date).format('dddd, MMMM Do YYYY, h:mm:ss a')
+      data[index].imagesrc = 'uploads/' + data[index].picture.filename
     }
     res.render('home', {
       posts: data
@@ -23,13 +45,16 @@ router.get('/add-post', function (req, res) {
   res.render('post')
 })
 
-router.post('/add-post', function (req, res) {
+router.post('/add-post', upload.single('image'), function (req, res, next) {
   var post = new Post()
 
   post.title = req.body.title || ''
   post.content = req.body.content || ''
   post.date = moment(req.body.date, 'dddd, MMMM Do YYYY, h:mm:ss a') || new Date()
-  // post.picture = req.files.image || ""
+  post.picture = {
+    filename: req.file.filename,
+    extension: req.file.mimetype
+  }
 
   post.save(function (err) {
     if (err) throw err
@@ -51,7 +76,7 @@ router.get('/edit-post/:id', function (req, res) {
   })
 })
 
-router.post('/edit-post/:id', function (req, res) {
+router.post('/edit-post/:id', upload.single('image'), function (req, res, next) {
   Post.findOne({
     '_id': new ObjectId(req.params.id)
   }, function (err, post) {
@@ -61,7 +86,10 @@ router.post('/edit-post/:id', function (req, res) {
     post.title = req.body.title || ''
     post.content = req.body.content || ''
     post.date = moment(req.body.date, 'dddd, MMMM Do YYYY, h:mm:ss a') || new Date()
-    post.picture = req.body.image || ''
+    post.picture = {
+      filename: req.file.filename,
+      extension: req.file.mimetype
+    }
 
     post.save(function (err) {
       if (err) {

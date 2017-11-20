@@ -20,7 +20,7 @@
 </nav>
 
 <main role="main" class="container">
-  <form action="../edit-post/{{post._id}}" method="POST">
+  <form action="../edit-post/{{post._id}}" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="exampleFormControlInput1">Title</label>
       <input type="text" class="form-control" value="{{post.title}}" name="title">
