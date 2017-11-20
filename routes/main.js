@@ -2,28 +2,12 @@ var router = require('express').Router()
 var ObjectId = require('mongoose').Types.ObjectId
 var moment = require('moment')
 var multer = require('multer')
-// var crypto = require('crypto')
-// var path = require('path')
 
 var Post = require('../models/post')
 
 var upload = multer({
   dest: 'static/uploads/'
 })
-
-// var storage = multer.diskStorage({
-//   destination: 'some-destination',
-//   filename: function (req, file, callback) {
-//     crypto.pseudoRandomBytes(16, function (err, raw) {
-//       if (err) return callback(err)
-//       callback(null, raw.toString('hex') + path.extname(file.originalname))
-//     })
-//   }
-// })
-
-// var upload = multer({
-//   storage: storage
-// }).array('image')
 
 router.get('/', function (req, res) {
   Post.find({}, function (err, posts) {
