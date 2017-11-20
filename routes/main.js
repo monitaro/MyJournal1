@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
     }
     var data = posts
     for (let index = 0; index < data.length; index++) {
-      data[index].date2 = moment(data[index].date).format('dddd, MMMM Do YYYY, h:mm:ss a')
+      data[index].date2 = moment(data[index].date).format('MM/DD/YYYY, hh:mm A')
       data[index].imagesrc = 'uploads/' + data[index].picture.filename
     }
     res.render('home', {
@@ -34,7 +34,7 @@ router.post('/add-post', upload.single('image'), function (req, res, next) {
 
   post.title = req.body.title || ''
   post.content = req.body.content || ''
-  post.date = moment(req.body.date, 'dddd, MMMM Do YYYY, h:mm:ss a') || new Date()
+  post.date = moment(req.body.date, 'MM/DD/YYYY, hh:mm A') || new Date()
   post.picture = {
     filename: req.file.filename,
     extension: req.file.mimetype
@@ -53,7 +53,7 @@ router.get('/edit-post/:id', function (req, res) {
     if (err) {
       console.log(err)
     }
-    post.date2 = moment(post.date).format('dddd, MMMM Do YYYY, h:mm:ss a')
+    post.date2 = moment(post.date).format('MM/DD/YYYY, hh:mm A')
     res.render('edit', {
       post: post
     })
@@ -69,10 +69,12 @@ router.post('/edit-post/:id', upload.single('image'), function (req, res, next) 
     }
     post.title = req.body.title || ''
     post.content = req.body.content || ''
-    post.date = moment(req.body.date, 'dddd, MMMM Do YYYY, h:mm:ss a') || new Date()
-    post.picture = {
-      filename: req.file.filename,
-      extension: req.file.mimetype
+    post.date = moment(req.body.date, 'MM/DD/YYYY, hh:mm A') || new Date()
+    if (req.file) {
+      post.picture = {
+        filename: req.file.filename,
+        extension: req.file.mimetype
+      }
     }
 
     post.save(function (err) {
@@ -82,16 +84,6 @@ router.post('/edit-post/:id', upload.single('image'), function (req, res, next) 
       res.redirect('/')
     })
   })
-})
-
-router.get('/img', function (req, res) {
-  var img = Buffer.from(req.body.img, 'base64')
-
-  res.writeHead(200, {
-    'Content-Type': 'image/png',
-    'Content-Length': img.length
-  })
-  res.end(img)
 })
 
 module.exports = router

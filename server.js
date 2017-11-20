@@ -21,7 +21,9 @@ app.use(mainRoutes)
 app.use(express.static(path.join(__dirname, '/node_modules/bootstrap/dist')))
 app.use(express.static(path.join(__dirname, '/node_modules/popper.js/dist')))
 app.use(express.static(path.join(__dirname, '/node_modules/jquery/dist')))
-app.use(express.static(path.join(__dirname, '/bower_components')))
+app.use(express.static(path.join(__dirname, '/node_modules/pc-bootstrap4-datetimepicker/build')))
+app.use(express.static(path.join(__dirname, '/node_modules/font-awesome')))
+app.use(express.static(path.join(__dirname, '/node_modules/moment/min')))
 app.use(express.static(path.join(__dirname, '/static/')))
 
 app.engine('handlebars', exphbs({
