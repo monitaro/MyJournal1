@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">My Journal</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Add Entry</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main role="main" class="container">
+
+  <div class="starter-template">
+    <h1>Bootstrap starter template</h1>
+    <p class="lead">Use this document as a way to quickly start any new project.
+      <br> All you get is this text and a mostly barebones HTML document.</p>
+    {{#each posts}}
+    <div class="card myCard">
+      <img class="card-img-top" src="{{picture}}" alt="Card image cap">
+      <div class="card-body">
+        <h4 class="card-title">{{title}}</h4>
+        <h5 class="card-title">{{date2}}</h5>
+        <p class="card-text">{{content}}</p>
+        <a href="/edit-post/{{_id}}" class="btn btn-primary">Edit Entry</a>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+
+
+</main>
+<!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../../../../assets/js/vendor/popper.min.js"></script>
+<script src="../../../../dist/js/bootstrap.min.js"></script>
