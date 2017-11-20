@@ -19,6 +19,9 @@ var mainRoutes = require('./routes/main')
 app.use(mainRoutes)
 
 app.use(express.static(path.join(__dirname, '/node_modules/bootstrap/dist')))
+app.use(express.static(path.join(__dirname, '/node_modules/popper.js/dist')))
+app.use(express.static(path.join(__dirname, '/node_modules/jquery/dist')))
+app.use(express.static(path.join(__dirname, '/bower_components')))
 app.use(express.static(path.join(__dirname, '/static/')))
 
 app.engine('handlebars', exphbs({
