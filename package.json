@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://www.google.de"
+    "url": "https://github.com/monitaro/MyJournal1.git"
   },
   "keywords": [
-    "asd"
+    "node.js, mongodb"
   ],
   "author": "Rene",
   "license": "ISC",
